@@ -2,7 +2,6 @@ import fs from "fs";
 import { getDocument } from "pdfjs-dist"; 
 import { createWorker } from "tesseract.js"; 
 import { summarizeWithGemini } from "../services/geminiService.js";
-import Document from "../models/Document.js";
 
 // PDF Extraction 
 async function extractTextFromPDF(filePath) {
@@ -22,7 +21,6 @@ async function extractTextFromPDF(filePath) {
 
 // --- Image Extraction (OCR with Tesseract) ---
 async function extractTextFromImage(filePath) {
-
   const worker = await createWorker("eng");
   const {
     data: { text },
@@ -51,14 +49,8 @@ export async function handleUpload(req, res) {
       req.body.length || "medium"
     );
 
-    const doc = await Document.create({
-      filename: file.filename,
-      originalname: file.originalname,
-      text,
-      summary,
-    });
-
-    res.json({ id: doc._id, summary, textPreview: text.slice(0, 1000) });
+    // No DB: just return summary and preview
+    res.json({ summary, textPreview: text.slice(0, 1000), filename: file.originalname });
   } catch (err) {
     console.error("Upload error:", err);
     res.status(500).json({ error: "Processing error" });
