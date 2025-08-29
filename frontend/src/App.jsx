@@ -5,7 +5,7 @@ function App() {
 
   return (
     <div>
-      <UploadForm className="min-h-screen bg-gray-100 flex items-center justify-center"></UploadForm>
+      <UploadForm className="min-h-screen bg-gray-100 flex items-center justify-center"/>
     </div>
   )
 }

@@ -74,7 +74,6 @@ export default function UploadForm() {
         </label>
       </div>
 
-      {/* Glass Card */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -87,12 +86,13 @@ export default function UploadForm() {
         </h1>
 
         <form onSubmit={onSubmit} className="space-y-6">
-          {/* File Upload */}
-          <label className="flex flex-col items-center justify-center w-full h-32 px-4 py-6 
+          <label
+            className="flex flex-col items-center justify-center w-full h-32 px-4 py-6 
                             border-2 border-dashed rounded-2xl cursor-pointer 
                             bg-white/30 dark:bg-gray-700/30 backdrop-blur-sm
                             hover:bg-white/50 dark:hover:bg-gray-700/50
-                            transition-all duration-300">
+                            transition-all duration-300"
+          >
             <input
               type="file"
               accept=".pdf,.png,.jpg,.jpeg"
@@ -101,7 +101,7 @@ export default function UploadForm() {
             />
             {file ? (
               <p className="text-sm font-medium text-blue-600 dark:text-blue-400">
-                ✅ {file.name}
+                {file.name}
               </p>
             ) : (
               <p className="text-gray-600 dark:text-gray-300">
@@ -110,25 +110,29 @@ export default function UploadForm() {
             )}
           </label>
 
-          {/* Summary Length Selector */}
           <motion.select
-  whileHover={{ scale: 1.01 }}
-  value={length}
-  onChange={(e) => setLength(e.target.value)}
-  className="w-full rounded-xl p-3 
+            whileHover={{ scale: 1.01 }}
+            value={length}
+            onChange={(e) => setLength(e.target.value)}
+            className="w-full rounded-xl p-3 
              bg-white/40 dark:bg-gray-800/40 
              border border-transparent bg-clip-padding 
              backdrop-blur-xl shadow-inner
              text-white
              focus:ring-2 focus:ring-blue-400 dark:focus:ring-purple-500 
              transition-all duration-300"
->
-  <option className="bg-gray-800 text-white" value="short">Short</option>
-  <option className="bg-gray-800 text-white" value="medium">Medium</option>
-  <option className="bg-gray-800 text-white" value="long">Long</option>
-</motion.select>
+          >
+            <option className="bg-gray-800 text-white" value="short">
+              Short
+            </option>
+            <option className="bg-gray-800 text-white" value="medium">
+              Medium
+            </option>
+            <option className="bg-gray-800 text-white" value="long">
+              Long
+            </option>
+          </motion.select>
 
-          {/* Submit Button */}
           <motion.button
             whileTap={{ scale: 0.97 }}
             whileHover={{ scale: 1.02 }}
@@ -139,11 +143,10 @@ export default function UploadForm() {
                        hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500
                        transition-all duration-300"
           >
-            {loading ? "⚡ Processing..." : "🚀 Upload & Summarize"}
+            {loading ? " Processing..." : " Upload & Summarize"}
           </motion.button>
         </form>
 
-        {/* Error */}
         {error && (
           <motion.p
             initial={{ opacity: 0 }}
@@ -154,7 +157,6 @@ export default function UploadForm() {
           </motion.p>
         )}
 
-        {/* Summary Result */}
         {summary && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -163,7 +165,7 @@ export default function UploadForm() {
             className="mt-8 p-6 rounded-2xl border border-white/20 dark:border-gray-600 
                        bg-white/50 dark:bg-gray-700/50 backdrop-blur-md shadow-lg"
           >
-            <h3 className="text-xl font-semibold mb-3">✨ Summary</h3>
+            <h3 className="text-xl font-semibold mb-3">Summary</h3>
             <p className="leading-relaxed text-gray-800 dark:text-gray-200">
               {summary}
             </p>
