@@ -146,7 +146,7 @@ export default function UploadForm() {
                 className="hidden"
               />
               {file ? (
-                <p className="text-sm font-medium text-blue-600 dark:text-blue-400">
+                <p className="text-lg font-medium text-blue-600 dark:text-blue-400">
                   {file.name}
                 </p>
               ) : (
@@ -211,7 +211,7 @@ export default function UploadForm() {
               className="mt-8 p-6 rounded-2xl border border-white/20 dark:border-gray-600 
                          bg-white/50 dark:bg-gray-700/50 backdrop-blur-md shadow-lg"
             >
-              <h3 className="text-xl font-semibold mb-3">Summary</h3>
+              <h3 className="text-xl text-amber-200 font-semibold mb-3">Summary</h3>
               <p className="leading-relaxed text-gray-800 dark:text-gray-200">
                 {summary}
               </p>
