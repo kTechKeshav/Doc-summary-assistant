@@ -35,12 +35,13 @@ Doc_summery-assistant/
 ## ✨ Features
 
 - **Upload PDF or Image**: Drag & drop or select files for instant summarization.
-- **AI Summarization**: Uses Gemini AI (via backend) to generate concise summaries.
+- **AI Summarization**: Uses **Gemini AI** via backend for concise and intelligent summaries.
+- **In-Memory File Handling**: No uploads saved on disk (`multer.memoryStorage`), making it cloud-friendly.
 - **Carbon Glass UI**: Beautiful glassmorphism design inspired by Carbon theme.
-- **Dark/Light Mode**: Toggle between elegant dark and light themes.
-- **History Panel**: View, select, and delete previous summaries (stored in browser localStorage).
+- **Dark/Light Mode**: Elegant theme toggle.
+- **History Panel**: View, select, and delete previous summaries (stored in **browser localStorage**).
 - **Responsive Design**: Works beautifully on desktop and mobile.
-- **No Database Needed**: Stateless backend, history managed on frontend.
+- **Stateless Backend**: No database needed, frontend manages history.
 
 ---
 
@@ -89,7 +90,7 @@ Frontend will start at [http://localhost:5173](http://localhost:5173).
 ## 🛠️ Tech Stack
 
 - **Frontend:** React 19, Vite, Tailwind CSS, Framer Motion, Axios
-- **Backend:** Express.js, pdfjs-dist, tesseract.js, @google/generative-ai, Multer, CORS
+- **Backend:** Express.js, pdfjs-dist, tesseract.js, @google/generative-ai, Multer (memoryStorage), CORS
 
 ---
 
