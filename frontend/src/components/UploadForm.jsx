@@ -11,13 +11,13 @@ export default function UploadForm() {
   const [darkMode, setDarkMode] = useState(false);
   const [history, setHistory] = useState([]);
 
-  // ✅ Load history + last summary from localStorage
+  
   useEffect(() => {
     const saved = localStorage.getItem("summaries");
     if (saved) {
       setHistory(JSON.parse(saved));
     }
-    // Reset left section states on every reload
+    
     setFile(null);
     setLength("short");
     setSummary(null);
@@ -25,14 +25,12 @@ export default function UploadForm() {
     setLoading(false);
   }, []);
 
-  // ✅ Save history to localStorage whenever it changes
+  
   useEffect(() => {
     if (history.length > 0) {
       localStorage.setItem("summaries", JSON.stringify(history));
     }
   }, [history]);
-
-
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -57,7 +55,7 @@ export default function UploadForm() {
 
       setSummary(res.data.summary);
 
-      // ✅ Save to history (new entry first)
+      
       const newEntry = {
         filename: res.data.filename || file.name,
         summary: res.data.summary,
@@ -72,12 +70,12 @@ export default function UploadForm() {
     }
   };
 
-  // ✅ When user clicks a history item, reload summary
+  
   const handleHistoryClick = (item) => {
     setSummary(item.summary);
   };
 
-  // Add this function inside your component
+  
   const handleDeleteHistory = (idx) => {
     const updated = history.filter((_, i) => i !== idx);
     setHistory(updated);
@@ -117,9 +115,9 @@ export default function UploadForm() {
         </label>
       </div>
 
-      {/* Responsive Flex Layout */}
+      
       <div className="flex flex-col md:flex-row w-full max-w-6xl gap-8 items-start justify-center px-2">
-        {/* Left: Upload & Summarize */}
+        
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -209,88 +207,94 @@ export default function UploadForm() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
               className="mt-8 p-6 rounded-2xl border border-white/20 dark:border-gray-600 
-                         bg-white/50 dark:bg-gray-700/50 backdrop-blur-md shadow-lg"
+               bg-white/50 dark:bg-gray-700/50 backdrop-blur-md shadow-lg"
             >
-              <h3 className="text-xl text-amber-200 font-semibold mb-3">Summary</h3>
-              <p className="leading-relaxed text-gray-800 dark:text-gray-200">
-                {summary}
-              </p>
+              <h3 className="text-xl text-amber-200 font-semibold mb-3">
+                Summary
+              </h3>
+              <div
+                className="leading-relaxed text-gray-800 dark:text-gray-200 
+             [&>span]:text-green-400 [&>span]:font-bold [&>span]:text-lg"
+                dangerouslySetInnerHTML={{ __html: summary }}
+              />
             </motion.div>
           )}
         </motion.div>
 
         {/* Right: History Section */}
         <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7 }}
-          className="flex-1 p-6 md:p-8 rounded-3xl shadow-xl backdrop-blur-xl 
-                     bg-white/40 dark:bg-gray-500/40 border border-white/20 min-h-[400px] max-h-[900px] 
-                     overflow-y-auto scrollbar-thin scrollbar-thumb-blue-300 scrollbar-track-blue-100"
+  initial={{ opacity: 0, x: 30 }}
+  animate={{ opacity: 1, x: 0 }}
+  transition={{ duration: 0.7 }}
+  className="flex-[1.5] p-6 md:p-10 rounded-3xl shadow-xl backdrop-blur-xl 
+             bg-white/40 dark:bg-gray-500/40 border border-white/20 min-h-[400px] max-h-[900px] 
+             overflow-y-auto scrollbar-thin scrollbar-thumb-blue-300 scrollbar-track-blue-100"
+>
+  <h2 className="text-xl md:text-2xl font-bold mb-6 text-center">
+    Previous Summaries
+  </h2>
+  {history.length > 0 ? (
+    <div className="flex flex-col gap-4">
+      {history.map((item, idx) => (
+        <motion.div
+          key={idx}
+          whileHover={{ scale: 1.01 }}
+          onClick={() => handleHistoryClick(item)}
+          className="p-4 rounded-xl bg-white/20 dark:bg-gray-600/60 shadow 
+           border border-white/10 flex flex-col cursor-pointer group"
         >
-          <h2 className="text-xl md:text-2xl font-bold mb-6 text-center">
-            Previous Summaries
-          </h2>
-          {history.length > 0 ? (
-            <div className="flex flex-col gap-4">
-              {history.map((item, idx) => (
-                <motion.div
-                  key={idx}
-                  whileHover={{ scale: 1.01 }}
-                  onClick={() => handleHistoryClick(item)}
-                  className="p-4 rounded-xl bg-white/20 dark:bg-gray-600/60 shadow 
-                   border border-white/10 flex flex-col cursor-pointer group"
+          
+          <div className="flex justify-between items-center mb-2">
+            <span className="font-semibold text-cyan-300">
+              {item.filename}
+            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-gray-300">{item.date}</span>
+              
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDeleteHistory(idx);
+                }}
+                className="opacity-70 group-hover:opacity-100 transition p-1 
+                 rounded-full bg-red-500 hover:bg-red-600 text-white shadow"
+                title="Delete this summary"
+                aria-label="Delete summary"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  fill="none"
+                  viewBox="0 0 24 24"
                 >
-                  {/* Header Row */}
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="font-semibold text-cyan-400">
-                      {item.filename}
-                    </span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs text-gray-300">{item.date}</span>
-                      {/* Delete Button */}
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDeleteHistory(idx);
-                        }}
-                        className="opacity-70 group-hover:opacity-100 transition p-1 
-                         rounded-full bg-red-500 hover:bg-red-600 text-white shadow"
-                        title="Delete this summary"
-                        aria-label="Delete summary"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="14"
-                          height="14"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke="white"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M6 6l12 12M6 18L18 6"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Summary Text */}
-                  <p className="text-gray-800 dark:text-gray-200 text-sm line-clamp-3">
-                    {item.summary}
-                  </p>
-                </motion.div>
-              ))}
+                  <path
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 6l12 12M6 18L18 6"
+                  />
+                </svg>
+              </button>
             </div>
-          ) : (
-            <p className="text-center text-gray-600 dark:text-gray-500">
-              No previous summaries yet.
-            </p>
-          )}
+          </div>
+
+          <div
+            className="text-gray-800 dark:text-gray-200 text-sm font-bold line-clamp-3 
+                       [&>span]:text-yellow-400 [&>span]:font-bold [&>span]:text-base"
+            dangerouslySetInnerHTML={{ __html: item.summary }}
+          />
         </motion.div>
+      ))}
+    </div>
+  ) : (
+    <p className="text-center text-gray-600 dark:text-gray-500">
+      No previous summaries yet.
+    </p>
+  )}
+</motion.div>
+
       </div>
     </div>
   );
