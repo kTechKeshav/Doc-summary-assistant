@@ -81,6 +81,24 @@ export default function UploadForm() {
     setHistory(updated);
   };
 
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      setFile(e.dataTransfer.files[0]);
+    }
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDragEnter = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
   return (
     <div
       className={`min-h-screen flex items-center justify-center transition-colors duration-500 ${
@@ -136,6 +154,9 @@ export default function UploadForm() {
                               bg-white/30 dark:bg-gray-700/30 backdrop-blur-sm
                               hover:bg-white/50 dark:hover:bg-gray-700/50
                               transition-all duration-300"
+              onDrop={handleDrop}
+              onDragOver={handleDragOver}
+              onDragEnter={handleDragEnter}
             >
               <input
                 type="file"
