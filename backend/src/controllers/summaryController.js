@@ -19,7 +19,7 @@ async function extractTextFromPDF(filePath) {
   return text;
 }
 
-// --- Image Extraction (OCR with Tesseract) ---
+// Image Extraction => (OCR with Tesseract)
 async function extractTextFromImage(filePath) {
   const worker = await createWorker("eng");
   const {
@@ -49,7 +49,6 @@ export async function handleUpload(req, res) {
       req.body.length || "medium"
     );
 
-    // No DB: just return summary and preview
     res.json({ summary, textPreview: text.slice(0, 1000), filename: file.originalname });
   } catch (err) {
     console.error("Upload error:", err);

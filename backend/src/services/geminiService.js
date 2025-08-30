@@ -1,4 +1,3 @@
-// backend/src/services/geminiService.js
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import dotenv from "dotenv";
 dotenv.config();
@@ -7,10 +6,17 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 function buildPrompt(text, length = "medium") {
   const lengthMap = {
-    short: "Summarize in 30-60 words, highlight only the core points.",
-    medium: "Summarize in 100-150 words, include main points and key details.",
-    long: "Summarize in 300-400 words, preserving structure and major arguments."
-  };
+  short: `Summarize in 30-60 words. 
+          Highlight the most important keywords, dates, numbers, and names by wrapping them in <span> tags.`,
+  
+  medium: `Summarize in 100-150 words. 
+           Include main points and key details. 
+           Highlight the important entities, facts, or critical insights with <span> tags.`,
+  
+  long: `Summarize in 300-400 words, preserving structure and major arguments. 
+         Highlight the most important concepts, arguments, names, dates, and statistics with <span> tags.`
+};
+
   return `${lengthMap[length]}\n\nDocument:\n${text}`;
 }
 
