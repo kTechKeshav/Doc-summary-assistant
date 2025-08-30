@@ -1,17 +1,20 @@
 # 🚀 Doc Summary Assistant — Backend
 
-A fast Express.js backend for AI-powered document summarization.  
-Handles PDF/image uploads, extracts text, and generates summaries using Gemini AI.
+A fast **Express.js** backend for AI-powered document summarization.  
+Handles PDF/image uploads **in memory**, extracts text, and generates summaries using **Gemini AI**.
 
 ---
 
 ## ✨ Features
 
 - **File Upload API**: Accepts PDF and image files via `/api/upload`.
-- **Text Extraction**: Uses `pdfjs-dist` for PDFs and `tesseract.js` for images (OCR).
-- **AI Summarization**: Integrates Gemini AI for smart, customizable summaries.
-- **CORS Support**: Easily connects to any frontend.
-- **No Database Needed**: Stateless, summary history managed on frontend.
+- **In-Memory File Handling**: Uses `multer.memoryStorage()` → no files saved on disk, works seamlessly with Render/Vercel.
+- **Text Extraction**:  
+  - `pdfjs-dist` for PDFs.  
+  - `tesseract.js` for images (OCR).
+- **AI Summarization**: Uses **Gemini AI** to create smart, customizable summaries with highlighted key points.
+- **CORS Support**: Connects easily to any frontend.
+- **Stateless**: No database needed — history is stored in the frontend.
 
 ---
 
@@ -21,7 +24,7 @@ Handles PDF/image uploads, extracts text, and generates summaries using Gemini A
 - **pdfjs-dist** (PDF text extraction)
 - **tesseract.js** (OCR for images)
 - **@google/generative-ai** (Gemini API)
-- **Multer** (file uploads)
+- **Multer (memoryStorage)** (for in-memory uploads)
 - **CORS**
 - **dotenv**
 
