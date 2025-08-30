@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 
@@ -11,13 +11,10 @@ export default function UploadForm() {
   const [darkMode, setDarkMode] = useState(false);
   const [history, setHistory] = useState([]);
 
-  
   useEffect(() => {
     const saved = localStorage.getItem("summaries");
-    if (saved) {
-      setHistory(JSON.parse(saved));
-    }
-    
+    if (saved) setHistory(JSON.parse(saved));
+
     setFile(null);
     setLength("short");
     setSummary(null);
@@ -25,7 +22,6 @@ export default function UploadForm() {
     setLoading(false);
   }, []);
 
-  
   useEffect(() => {
     if (history.length > 0) {
       localStorage.setItem("summaries", JSON.stringify(history));
@@ -55,7 +51,6 @@ export default function UploadForm() {
 
       setSummary(res.data.summary);
 
-      
       const newEntry = {
         filename: res.data.filename || file.name,
         summary: res.data.summary,
@@ -70,12 +65,8 @@ export default function UploadForm() {
     }
   };
 
-  
-  const handleHistoryClick = (item) => {
-    setSummary(item.summary);
-  };
+  const handleHistoryClick = (item) => setSummary(item.summary);
 
-  
   const handleDeleteHistory = (idx) => {
     const updated = history.filter((_, i) => i !== idx);
     setHistory(updated);
@@ -101,7 +92,7 @@ export default function UploadForm() {
 
   return (
     <div
-      className={`min-h-screen flex items-center justify-center transition-colors duration-500 ${
+      className={`min-h-screen flex items-center justify-center px-3 sm:px-6 transition-colors duration-500 ${
         darkMode
           ? "bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white"
           : "bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 text-gray-900"
@@ -133,27 +124,28 @@ export default function UploadForm() {
         </label>
       </div>
 
-      
-      <div className="flex flex-col md:flex-row w-full max-w-6xl gap-8 items-start justify-center px-2">
-        
+      {/* Main Layout */}
+      <div className="flex flex-col lg:flex-row w-full max-w-6xl gap-8 items-start justify-center py-12">
+        {/* Upload & Summarize */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex-1 p-6 md:p-8 rounded-3xl shadow-xl backdrop-blur-xl 
-                     bg-white/40 dark:bg-gray-800/40 border border-white/20 mb-8 md:mb-0"
+          className="flex-1 w-full p-6 md:p-8 rounded-3xl shadow-xl backdrop-blur-xl 
+                     bg-white/50 dark:bg-gray-800/50 border border-white/20"
         >
           <h1 className="text-2xl md:text-3xl font-bold mb-8 text-center tracking-tight">
             📄 Document Summarizer
           </h1>
 
           <form onSubmit={onSubmit} className="space-y-6">
+            {/* File Upload */}
             <label
               className="flex flex-col items-center justify-center w-full h-32 px-4 py-6 
                               border-2 border-dashed rounded-2xl cursor-pointer 
-                              bg-white/30 dark:bg-gray-700/30 backdrop-blur-sm
-                              hover:bg-white/50 dark:hover:bg-gray-700/50
-                              transition-all duration-300"
+                              bg-white/40 dark:bg-gray-700/40 backdrop-blur-sm
+                              hover:bg-white/60 dark:hover:bg-gray-700/60
+                              transition-all duration-300 text-center"
               onDrop={handleDrop}
               onDragOver={handleDragOver}
               onDragEnter={handleDragEnter}
@@ -165,39 +157,34 @@ export default function UploadForm() {
                 className="hidden"
               />
               {file ? (
-                <p className="text-lg font-medium text-blue-600 dark:text-blue-400">
+                <p className="text-base sm:text-lg font-medium text-blue-600 dark:text-blue-400 truncate max-w-[90%]">
                   {file.name}
                 </p>
               ) : (
-                <p className="text-gray-600 dark:text-gray-300">
+                <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
                   Drag & drop or click to upload PDF/Image
                 </p>
               )}
             </label>
 
+            {/* Length Select */}
             <motion.select
               whileHover={{ scale: 1.01 }}
               value={length}
               onChange={(e) => setLength(e.target.value)}
               className="w-full rounded-xl p-3 
-               bg-white/40 dark:bg-gray-800/40 
-               border border-transparent bg-clip-padding 
-               backdrop-blur-xl shadow-inner
-               text-white
-               focus:ring-2 focus:ring-blue-400 dark:focus:ring-purple-500 
-               transition-all duration-300"
+                         bg-white/60 dark:bg-gray-800/60 
+                         border border-gray-200 dark:border-gray-600 
+                         text-gray-800 dark:text-white
+                         focus:ring-2 focus:ring-blue-400 dark:focus:ring-purple-500 
+                         transition-all duration-300"
             >
-              <option className="bg-gray-800 text-white" value="short">
-                Short
-              </option>
-              <option className="bg-gray-800 text-white" value="medium">
-                Medium
-              </option>
-              <option className="bg-gray-800 text-white" value="long">
-                Long
-              </option>
+              <option value="short">Short</option>
+              <option value="medium">Medium</option>
+              <option value="long">Long</option>
             </motion.select>
 
+            {/* Submit */}
             <motion.button
               whileTap={{ scale: 0.97 }}
               whileHover={{ scale: 1.02 }}
@@ -228,94 +215,83 @@ export default function UploadForm() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
               className="mt-8 p-6 rounded-2xl border border-white/20 dark:border-gray-600 
-               bg-white/50 dark:bg-gray-700/50 backdrop-blur-md shadow-lg"
+                         bg-white/70 dark:bg-gray-700/70 backdrop-blur-md shadow-lg"
             >
-              <h3 className="text-xl text-amber-200 font-semibold mb-3">
+              <h3 className="text-xl text-amber-400 font-semibold mb-3">
                 Summary
               </h3>
               <div
                 className="leading-relaxed text-gray-800 dark:text-gray-200 
-             [&>span]:text-green-400 [&>span]:font-bold [&>span]:text-lg"
+                           [&>span]:text-green-400 [&>span]:font-bold [&>span]:text-lg"
                 dangerouslySetInnerHTML={{ __html: summary }}
               />
             </motion.div>
           )}
         </motion.div>
 
-        {/* Right: History Section */}
+        {/* History Section */}
         <motion.div
-  initial={{ opacity: 0, x: 30 }}
-  animate={{ opacity: 1, x: 0 }}
-  transition={{ duration: 0.7 }}
-  className="flex-[1.5] p-6 md:p-10 rounded-3xl shadow-xl backdrop-blur-xl 
-             bg-white/40 dark:bg-gray-500/40 border border-white/20 min-h-[400px] max-h-[900px] 
-             overflow-y-auto scrollbar-thin scrollbar-thumb-blue-300 scrollbar-track-blue-100"
->
-  <h2 className="text-xl md:text-2xl font-bold mb-6 text-center">
-    Previous Summaries
-  </h2>
-  {history.length > 0 ? (
-    <div className="flex flex-col gap-4">
-      {history.map((item, idx) => (
-        <motion.div
-          key={idx}
-          whileHover={{ scale: 1.01 }}
-          onClick={() => handleHistoryClick(item)}
-          className="p-4 rounded-xl bg-white/20 dark:bg-gray-600/60 shadow 
-           border border-white/10 flex flex-col cursor-pointer group"
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.7 }}
+          className="flex-[1.2] w-full p-6 md:p-8 rounded-3xl shadow-xl backdrop-blur-xl 
+                     bg-white/50 dark:bg-gray-700/50 border border-white/20 
+                     min-h-[350px] max-h-[700px] overflow-y-auto 
+                     scrollbar-thin scrollbar-thumb-blue-400 scrollbar-track-transparent"
         >
-          
-          <div className="flex justify-between items-center mb-2">
-            <span className="font-semibold text-cyan-300">
-              {item.filename}
-            </span>
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-300">{item.date}</span>
-              
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleDeleteHistory(idx);
-                }}
-                className="opacity-70 group-hover:opacity-100 transition p-1 
-                 rounded-full bg-red-500 hover:bg-red-600 text-white shadow"
-                title="Delete this summary"
-                aria-label="Delete summary"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="14"
-                  height="14"
-                  fill="none"
-                  viewBox="0 0 24 24"
+          <h2 className="text-xl md:text-2xl font-bold mb-6 text-center">
+            Previous Summaries
+          </h2>
+          {history.length > 0 ? (
+            <div className="flex flex-col gap-4">
+              {history.map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  whileHover={{ scale: 1.01 }}
+                  onClick={() => handleHistoryClick(item)}
+                  className="p-4 rounded-xl bg-white/40 dark:bg-gray-800/60 shadow 
+                             border border-white/10 flex flex-col cursor-pointer group 
+                             transition-all duration-300"
                 >
-                  <path
-                    stroke="white"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 6l12 12M6 18L18 6"
+                  {/* Header */}
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="font-semibold text-blue-500 dark:text-blue-300 text-sm truncate max-w-[65%]">
+                      {item.filename}
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-gray-500 dark:text-gray-300">
+                        {item.date}
+                      </span>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteHistory(idx);
+                        }}
+                        className="opacity-70 group-hover:opacity-100 transition p-1 
+                                   rounded-full bg-red-500 hover:bg-red-600 text-white shadow"
+                        title="Delete this summary"
+                        aria-label="Delete summary"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Summary */}
+                  <div
+                    className="text-gray-700 dark:text-gray-200 text-sm line-clamp-3 
+                               [&>span]:text-yellow-400 [&>span]:font-semibold [&>span]:text-base"
+                    dangerouslySetInnerHTML={{ __html: item.summary }}
                   />
-                </svg>
-              </button>
+                </motion.div>
+              ))}
             </div>
-          </div>
-
-          <div
-            className="text-gray-800 dark:text-gray-200 text-sm font-bold line-clamp-3 
-                       [&>span]:text-yellow-400 [&>span]:font-bold [&>span]:text-base"
-            dangerouslySetInnerHTML={{ __html: item.summary }}
-          />
+          ) : (
+            <p className="text-center text-gray-600 dark:text-gray-400">
+              No previous summaries yet.
+            </p>
+          )}
         </motion.div>
-      ))}
-    </div>
-  ) : (
-    <p className="text-center text-gray-600 dark:text-gray-500">
-      No previous summaries yet.
-    </p>
-  )}
-</motion.div>
-
       </div>
     </div>
   );
