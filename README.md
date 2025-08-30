@@ -1,7 +1,12 @@
 # 📝 Doc Summary Assistant
 
-A full-stack AI-powered document summarization app.  
-Upload PDFs or images, get instant summaries using Gemini AI, and manage your summary history with a stunning Carbon Glass UI.
+A full-stack AI-powered document summarization app...
+
+---
+
+## 🌐 Live Demo
+
+[https://doc-summery-assistant.vercel.app/](https://doc-summery-assistant.vercel.app/)
 
 ---
 
@@ -122,3 +127,4 @@ MIT
 - [Gemini AI](https://ai.google.dev/)
 - [pdfjs-dist](https://github.com/mozilla/pdf.js)
 - [Tesseract.js](https://github.com/naptha/tesseract.js)
+

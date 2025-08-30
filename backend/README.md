@@ -1,7 +1,13 @@
 # 🚀 Doc Summary Assistant — Backend
 
-A fast **Express.js** backend for AI-powered document summarization.  
+A fast Express.js backend for AI-powered document summarization.  
 Handles PDF/image uploads **in memory**, extracts text, and generates summaries using **Gemini AI**.
+
+---
+
+## 🌐 Live Backend API
+
+[https://doc-summery-assistant.onrender.com](https://doc-summery-assistant.onrender.com)
 
 ---
 

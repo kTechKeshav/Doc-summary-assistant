@@ -5,6 +5,12 @@ Features a beautiful Carbon Glass UI, dark/light mode toggle, and local history 
 
 ---
 
+## 🌐 Live Demo
+
+[https://doc-summery-assistant.vercel.app/](https://doc-summery-assistant.vercel.app/)
+
+---
+
 ## ✨ Features
 
 - **Upload PDF or Image**: Drag & drop or select files for instant summarization.
