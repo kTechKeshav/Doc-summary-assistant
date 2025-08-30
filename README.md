@@ -121,4 +121,3 @@ MIT
 - [Gemini AI](https://ai.google.dev/)
 - [pdfjs-dist](https://github.com/mozilla/pdf.js)
 - [Tesseract.js](https://github.com/naptha/tesseract.js)
--
