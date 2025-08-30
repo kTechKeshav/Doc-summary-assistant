@@ -287,7 +287,7 @@ export default function UploadForm() {
               ))}
             </div>
           ) : (
-            <p className="text-center text-gray-600 dark:text-gray-400">
+            <p className="text-center text-gray-600 dark:text-gray-200">
               No previous summaries yet.
             </p>
           )}
