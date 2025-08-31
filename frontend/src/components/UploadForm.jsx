@@ -2,6 +2,16 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 
+// download helper
+const downloadFile = (content, filename, type) => {
+  const blob = new Blob([content], { type });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(link.href);
+};
+
 export default function UploadForm() {
   const [file, setFile] = useState(null);
   const [length, setLength] = useState("short");
@@ -90,6 +100,22 @@ export default function UploadForm() {
     e.stopPropagation();
   };
 
+  // Download helpers for summary
+  const downloadSummary = (summary, filename, format) => {
+    if (format === "txt") {
+      downloadFile(summary.replace(/<[^>]+>/g, ""), `${filename}.txt`, "text/plain");
+    } else if (format === "pdf") {
+      // simple text-only PDF using jsPDF
+      import("jspdf").then(({ default: jsPDF }) => {
+        const doc = new jsPDF();
+        doc.setFont("Helvetica", "normal");
+        doc.setFontSize(12);
+        doc.text(summary.replace(/<[^>]+>/g, ""), 10, 10, { maxWidth: 180 });
+        doc.save(`${filename}.pdf`);
+      });
+    }
+  };
+
   return (
     <div
       className={`min-h-screen flex items-center justify-center px-3 sm:px-6 transition-colors duration-500 ${
@@ -126,7 +152,6 @@ export default function UploadForm() {
 
       {/* Main Layout */}
       <div className="flex flex-col lg:flex-row w-full max-w-6xl gap-8 items-start justify-center py-12">
-        {/* Upload & Summarize */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -217,9 +242,27 @@ export default function UploadForm() {
               className="mt-8 p-6 rounded-2xl border border-white/20 dark:border-gray-600 
                          bg-white/70 dark:bg-gray-700/70 backdrop-blur-md shadow-lg"
             >
-              <h3 className="text-xl text-amber-400 font-semibold mb-3">
-                Summary
-              </h3>
+              <div className="flex justify-between items-center mb-3">
+                <h3 className="text-xl text-amber-400 font-semibold">Summary</h3>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() =>
+                      downloadSummary(summary, file?.name || "summary", "txt")
+                    }
+                    className="px-3 py-1 text-xs rounded-md bg-blue-500 hover:bg-blue-600 text-white"
+                  >
+                    TXT
+                  </button>
+                  <button
+                    onClick={() =>
+                      downloadSummary(summary, file?.name || "summary", "pdf")
+                    }
+                    className="px-3 py-1 text-xs rounded-md bg-purple-500 hover:bg-purple-600 text-white"
+                  >
+                    PDF
+                  </button>
+                </div>
+              </div>
               <div
                 className="leading-relaxed text-gray-800 dark:text-gray-200 
                            [&>span]:text-green-400 [&>span]:font-bold [&>span]:text-lg"
@@ -255,13 +298,32 @@ export default function UploadForm() {
                 >
                   {/* Header */}
                   <div className="flex justify-between items-center mb-2">
-                    <span className="font-semibold text-blue-500 dark:text-blue-300 text-sm truncate max-w-[65%]">
+                    <span className="font-semibold text-blue-500 dark:text-blue-300 text-sm truncate max-w-[55%]">
                       {item.filename}
                     </span>
                     <div className="flex items-center gap-2">
                       <span className="text-xs text-gray-500 dark:text-gray-300">
                         {item.date}
                       </span>
+                      {/* Download buttons */}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          downloadSummary(item.summary, item.filename, "txt");
+                        }}
+                        className="px-2 py-1 text-xs rounded bg-blue-500 hover:bg-blue-600 text-white"
+                      >
+                        TXT
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          downloadSummary(item.summary, item.filename, "pdf");
+                        }}
+                        className="px-2 py-1 text-xs rounded bg-purple-500 hover:bg-purple-600 text-white"
+                      >
+                        PDF
+                      </button>
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
