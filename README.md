@@ -43,6 +43,7 @@ Doc_summery-assistant/
 - **AI Summarization**: Uses **Gemini AI** via backend for concise and intelligent summaries.
 - **In-Memory File Handling**: No uploads saved on disk (`multer.memoryStorage`), making it cloud-friendly.
 - **Carbon Glass UI**: Beautiful glassmorphism design inspired by Carbon theme.
+- **Download Summary**: Download any generated summary (new or previous) as a **PDF** or **Text** file with a single click.
 - **Dark/Light Mode**: Elegant theme toggle.
 - **History Panel**: View, select, and delete previous summaries (stored in **browser localStorage**).
 - **Responsive Design**: Works beautifully on desktop and mobile.

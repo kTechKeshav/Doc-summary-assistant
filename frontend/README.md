@@ -16,6 +16,7 @@ Features a beautiful Carbon Glass UI, dark/light mode toggle, and local history 
 - **Upload PDF or Image**: Drag & drop or select files for instant summarization.
 - **AI Summarization**: Uses Gemini AI (via backend) to generate concise summaries.
 - **Carbon Glass UI**: Stunning glassmorphism design inspired by Carbon theme.
+- **Download Summary**: Download any generated summary (new or previous) as a **PDF** or **Text** file with a single click.
 - **Dark/Light Mode**: Toggle between elegant dark and light themes.
 - **History Panel**: View, select, and delete previous summaries (stored in browser localStorage).
 - **Responsive Design**: Works beautifully on desktop and mobile.
