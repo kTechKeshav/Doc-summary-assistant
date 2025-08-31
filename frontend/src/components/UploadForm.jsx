@@ -121,7 +121,7 @@ export default function UploadForm() {
       className={`min-h-screen flex items-center justify-center px-3 sm:px-6 transition-colors duration-500 ${
         darkMode
           ? "bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white"
-          : "bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 text-gray-900"
+          : "bg-gradient-to-br from-green-200 via-purple-200 to-pink-200 text-gray-900"
       }`}
     >
       {/* Dark/Light Mode Toggle */}
